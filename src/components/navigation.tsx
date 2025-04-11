@@ -31,7 +31,7 @@ function Navigation() {
           {links.map((link) => (
             <li key={Math.random()}>
               <NavButton
-                key={Math.random()}
+                key={link.targetUrl}
                 className={link.className}
                 targetUrl={link.targetUrl}
                 variant={link.variant}
