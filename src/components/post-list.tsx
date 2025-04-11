@@ -1,14 +1,12 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React from 'react';
 
 import { collection, getDocs } from 'firebase/firestore';
+import ForClientButton from '@/src/components/forClient-button';
 import { db } from '../lib/firebase';
 import {
   Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
 } from './ui/card';
-import { Button } from './ui/button';
+
 import { formatDate } from '../lib/utils';
 
 export type Comment = {
@@ -38,15 +36,8 @@ const fetchPosts = async () => {
   return postsList;
 };
 
-export default function PostList() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const router = useRouter();
-
-  useEffect(() => {
-    fetchPosts().then((data) => {
-      setPosts(data);
-    });
-  }, []);
+export default async function PostList() {
+  const posts = await fetchPosts();
 
   return (
     <div className="grid gap-6 p-5 sm:p-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
@@ -60,15 +51,12 @@ export default function PostList() {
             <p className="line-clamp-3">{post.content}</p>
           </CardContent>
           <CardFooter>
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => {
-                router.push(`/posts/${post.id}`);
-              }}
-            >
-              Read More
-            </Button>
+            <ForClientButton
+              className=""
+              targetUrl={`/posts/${post.id}`}
+              variant="default"
+              btnText="Read More"
+            />
           </CardFooter>
         </Card>
       ))}

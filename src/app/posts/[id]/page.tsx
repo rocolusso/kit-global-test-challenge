@@ -9,6 +9,7 @@ import { formatDate } from '../../../lib/utils';
 import { Button } from '../../../components/ui/button';
 import type { Post } from '../../../components/post-list';
 import { db } from '../../../lib/firebase';
+import { Input } from '../../../components/ui/input';
 
 const fetchPost = async (postId: string) => {
   const postRef = doc(db, 'posts', postId);
@@ -25,7 +26,10 @@ const fetchPost = async (postId: string) => {
 
 export default function PostPage({ params }: any) {
   const [post, setPost] = React.useState<Post | null>(null);
-  const [loading, setLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  const [isCommiting, setIsCommiting] = React.useState(false);
+  const [isEditing, setIsEditing] = React.useState(false);
 
   React.useEffect(() => {
     const loadPost = async () => {
@@ -35,20 +39,24 @@ export default function PostPage({ params }: any) {
       } catch (error) {
         console.error('Error fetching post:', error);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
     loadPost();
   }, [params.id]);
 
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (!post) {
     return <div>Post not found</div>;
   }
+
+  // const commitPost = () => {
+  //   setIsCommiting(true);
+  // };
 
   return (
     <div className="container mx-auto">
@@ -62,8 +70,29 @@ export default function PostPage({ params }: any) {
             <p className="line-clamp-3">{post.content}</p>
           </CardContent>
           <CardFooter>
-            <Button variant="outline">Make Comment</Button>
-            <Button variant="outline">Edit Post</Button>
+            {
+              !isEditing && !isCommiting && (
+              <>
+                <Button variant="outline" onClick={() => setIsCommiting(true)}>Make Comment</Button>
+                <Button variant="outline" onClick={() => setIsEditing(true)}>Edit Post</Button>
+              </>
+              )
+             }
+            {
+              isCommiting && (
+              <div className="grid grid-cols-1 gap-2 sm:flex sm:gap-2">
+                <Input placeholder="Add a comment..." />
+                <Button variant="outline">Comment post</Button>
+              </div>
+              )
+             }
+            {
+                isEditing && (
+                <div className="">
+                  Post Editing FORM
+                </div>
+                )
+             }
           </CardFooter>
         </Card>
       </div>
