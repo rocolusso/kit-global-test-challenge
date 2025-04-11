@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { collection, getDocs } from 'firebase/firestore';
-import ForClientButton from '@/src/components/forClient-button';
+import RedirectButton from '@/src/components/redirect-button';
 import { db } from '../lib/firebase';
 import {
   Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
@@ -51,7 +51,7 @@ export default async function PostList() {
             <p className="line-clamp-3">{post.content}</p>
           </CardContent>
           <CardFooter>
-            <ForClientButton
+            <RedirectButton
               className=""
               targetUrl={`/posts/${post.id}`}
               variant="default"

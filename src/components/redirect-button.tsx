@@ -10,7 +10,7 @@ interface ButtonProps {
     variant:'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | null | undefined,
     btnText:string,
 }
-function ForClientButton({
+function RedirectButton({
   className, targetUrl, variant, btnText,
 }: ButtonProps) {
   const router = useRouter();
@@ -30,4 +30,4 @@ function ForClientButton({
   );
 }
 
-export default ForClientButton;
+export default RedirectButton;
