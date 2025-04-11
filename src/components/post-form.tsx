@@ -101,24 +101,13 @@ export default function PostForm() {
   };
 
   return (
-    <div className="">
-      <Card style={{
-        maxWidth: '400px',
-        padding: '20px',
-      }}
-      >
-        <CardHeader style={{
-          textAlign: 'center',
-        }}
-        >
+    <div className="min-w-[100vw] sm:min-w-[30vw]  p-5">
+      <Card>
+        <CardHeader className="text-center">
           <CardTitle>Create New Post</CardTitle>
           <CardDescription>Fill out the form below to create a new blog post</CardDescription>
         </CardHeader>
-        <CardContent style={{
-          maxWidth: '350px',
-          margin: '0 auto',
-        }}
-        >
+        <CardContent className="mx-auto">
           {isError && (
           <Alert variant="destructive" className="mb-6">
             <AlertCircle className="h-4 w-4" />
@@ -136,9 +125,7 @@ export default function PostForm() {
                     <FormLabel>Title</FormLabel>
                     <FormControl>
                       <Input
-                        style={{
-                          padding: '10px',
-                        }}
+                        className="p-2"
                         placeholder="Enter post title"
                         {...field}
                       />
@@ -157,9 +144,7 @@ export default function PostForm() {
                     <FormLabel>Author</FormLabel>
                     <FormControl>
                       <Input
-                        style={{
-                          padding: '10px',
-                        }}
+                        className="p-2"
                         placeholder="Your name"
                         {...field}
                       />
@@ -178,12 +163,8 @@ export default function PostForm() {
                     <FormLabel>Content</FormLabel>
                     <FormControl>
                       <Textarea
-                        style={{
-                          padding: '10px',
-                          height: '150px',
-                        }}
                         placeholder="Write your post content here..."
-                        className="min-h-[200px]"
+                        className="p-2 min-h-[200px] resize-none"
                         {...field}
                       />
                     </FormControl>
