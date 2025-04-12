@@ -24,7 +24,7 @@ const fetchPost = async (postId: string) => {
 
 export default async function PostPage({ params }: any) {
   const post = await fetchPost(params.id);
-
+  // TODO render post.author
   return (
     <div className="container mx-auto">
       <div className="grid gap-6 grid-cols-1 pt-10">

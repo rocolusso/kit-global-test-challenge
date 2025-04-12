@@ -6,6 +6,7 @@ import { Input } from '@/src/components/ui/input';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Post } from '@/src/components/post-list';
 import { useRouter } from 'next/navigation';
+import PostEditForm from '@/src/components/post-edit-form';
 import { db } from '../lib/firebase';
 
 type Props = {
@@ -88,7 +89,11 @@ function PostControls({ postId }: Props) {
       {
             isEditing && (
             <div className="">
-              Post Editing FORM
+              <PostEditForm
+                post={post}
+                postId={postId}
+                setIsEditing={setIsEditing}
+              />
             </div>
             )
         }
