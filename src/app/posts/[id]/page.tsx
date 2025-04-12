@@ -1,6 +1,7 @@
 import React from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import PostControls from '@/src/components/post-controls';
+import PostCommentsList from '@/src/components/post-comments-list';
 import {
   Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
 } from '../../../components/ui/card';
@@ -8,6 +9,8 @@ import { formatDate } from '../../../lib/utils';
 
 import type { Post } from '../../../components/post-list';
 import { db } from '../../../lib/firebase';
+
+export const dynamic = 'force-dynamic'; // SSR: always run on the server
 
 const fetchPost = async (postId: string) => {
   const postRef = doc(db, 'posts', postId);
@@ -20,14 +23,7 @@ const fetchPost = async (postId: string) => {
 };
 
 export default async function PostPage({ params }: any) {
-  // const [isCommiting, setIsCommiting] = React.useState(false);
-  // const [isEditing, setIsEditing] = React.useState(false);
-
   const post = await fetchPost(params.id);
-
-  // const commitPost = () => {
-  //   setIsCommiting(true);
-  // };
 
   return (
     <div className="container mx-auto">
@@ -40,8 +36,9 @@ export default async function PostPage({ params }: any) {
           <CardContent className="flex-grow">
             <p className="line-clamp-3">{post.content}</p>
           </CardContent>
+          <PostCommentsList postData={post} />
           <CardFooter>
-            <PostControls />
+            <PostControls postId={post.id} />
           </CardFooter>
         </Card>
       </div>
