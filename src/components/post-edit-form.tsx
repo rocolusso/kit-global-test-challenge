@@ -24,7 +24,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { z } from 'zod';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/src/lib/firebase';
 
 export type Comment = {
@@ -52,6 +52,8 @@ const postSchema = z.object({
 });
 
 type PostFormValues = z.infer<typeof postSchema>
+
+// TODO add remove Post
 
 function PostEditForm({ post, postId, setIsEditing }: {
     post: Post|null,
@@ -112,6 +114,18 @@ function PostEditForm({ post, postId, setIsEditing }: {
       setIsSaving(false);
       setIsEditing(false);
       router.refresh();
+    }
+  };
+
+  const deletePost = async (postId: string) => {
+    if (!postId) return;
+
+    try {
+      const postRef = doc(db, 'posts', postId);
+      await deleteDoc(postRef);
+      console.log(`Post with ID ${postId} successfully deleted.`);
+    } finally {
+      router.push('/posts');
     }
   };
 
@@ -183,6 +197,13 @@ function PostEditForm({ post, postId, setIsEditing }: {
 
               <Button type="submit" className="w-full" disabled={isSaving}>
                 {isSaving ? 'Saving...' : 'Save Post'}
+              </Button>
+              <Button
+                type="button"
+                className="bg-red-500"
+                onClick={() => deletePost(postId)}
+              >
+                Delete Post
               </Button>
             </form>
           </Form>
