@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ThemeToggleButton from '@/src/components/theme-toggle-button';
 import NavButton from './nav-button';
 
 type ButtonVariant = 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | null | undefined;
@@ -27,7 +28,9 @@ function Navigation() {
   return (
     <div className="header-navigation flex justify-center items-center">
       <nav>
-        <ul className=" pr-5 sm:p-0 grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-10">
+        <ul
+          className="flex flex-wrap gap-2 "
+        >
           {links.map((link) => (
             <li key={Math.random()}>
               <NavButton
@@ -39,6 +42,9 @@ function Navigation() {
               />
             </li>
           ))}
+          <li>
+            <ThemeToggleButton />
+          </li>
         </ul>
       </nav>
     </div>
