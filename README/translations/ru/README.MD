@@ -6,7 +6,7 @@
 
 ## 🌍 Language | Мова | Язык
 
-- [🇬🇧 English ](./../ua/README.MD)
+- [🇬🇧 English ](./../../../README.MD)
 - [🇺🇦 Українська](./../ua/README.MD)
 - [русский](./README.MD)
 
