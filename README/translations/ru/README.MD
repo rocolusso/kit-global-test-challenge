@@ -7,7 +7,7 @@
 ## 🌍 Language | Мова | Язык
 
 - [🇬🇧 English ](./../ua/README.MD)
-- [🇺🇦 Українська](./../ua/README.MD)
+- [🇺🇦 Українська](./README/translations/ua/README.MD)
 - [русский](./README.MD)
 
 ---
