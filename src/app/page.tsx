@@ -1,5 +1,5 @@
 import React from 'react';
-import PostForm from '../components/post-form';
+import PostForm from '@/src/components/post-form';
 
 export default function Home() {
   return (

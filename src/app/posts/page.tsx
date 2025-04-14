@@ -1,7 +1,7 @@
 import React from 'react';
 import PostsFiltering from '@/src/components/posts-filtering-service';
-import { collection, getDocs } from 'firebase/firestore';
-import db from '@/src/lib/firebase';
+
+import fetchPosts from '@/src/lib/post/fetchPosts';
 
 export const dynamic = 'force-dynamic';
 export type Comment = {
@@ -19,18 +19,6 @@ export type Post = {
   title: string
 }
 export default async function Posts() {
-  const fetchPosts = async () => {
-    const postsCollection = collection(db, 'posts');
-    const postsSnapshot = await getDocs(postsCollection);
-
-    const postsList = postsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as Post[];
-
-    return postsList;
-  };
-
   const posts = await fetchPosts();
 
   return (

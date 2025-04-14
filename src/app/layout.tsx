@@ -1,10 +1,10 @@
 import React from 'react';
-import './global.css';
-import Header from '../components/header';
-import Providers from './providers';
+import '@/src/app/global.css';
+import Providers from '@/src/app/providers';
+import Header from '@/src/components/header';
 
 export const metadata = {
-  title: 'Redux Theme App',
+  title: 'Blog App',
   description: 'App with Redux Theme Switcher',
 };
 function ThemeWrapper({ children }: { children: React.ReactNode }) {

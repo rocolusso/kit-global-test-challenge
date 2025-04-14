@@ -1,26 +1,15 @@
 import React from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+
 import PostControls from '@/src/components/post-controls';
 import PostCommentsList from '@/src/components/post-comments-list';
-import db from '@/src/lib/firebase';
-import type { Post } from '@/src/lib/types';
+
 import { formatDate } from '@/src/lib/utils';
 import {
   Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
-} from '@/src/components/ui/card';
+} from '@/src/components/ui/card'; // SSR: always run on the server
+import fetchPost from '@/src/lib/post/fetchPost';
 
-export const dynamic = 'force-dynamic'; // SSR: always run on the server
-
-const fetchPost = async (postId: string) => {
-  const postRef = doc(db, 'posts', postId);
-  const postSnap = await getDoc(postRef);
-
-  return {
-    id: postSnap.id,
-    ...postSnap.data(),
-  } as Post;
-};
-
+export const dynamic = 'force-dynamic';
 export default async function PostPage({ params }: any) {
   const post = await fetchPost(params.id);
   return (
