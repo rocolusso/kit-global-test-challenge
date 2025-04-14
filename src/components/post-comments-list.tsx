@@ -1,30 +1,29 @@
 import React from 'react';
-import { CardContent, CardTitle } from '@/src/components/ui/card';
-import type { Post } from './post-list';
+import { Card, CardContent, CardTitle } from '@/src/components/ui/card';
+import type { Post } from '@/src/lib/types';
 
-function PostCommentsList({ postData }:{postData:Post}) {
+function PostCommentsList({ post }:{post:Post}) {
   return (
-    <div>
+    <Card>
       {
-          postData.comments.length > 0 && (
+          post.comments.length > 0 && (
           <CardContent className="flex-grow">
             <CardTitle className="line-clamp-1">Comments</CardTitle>
             <div className="list pt-5 max-w-fit">
-              {postData.comments.length && (
+              {post.comments.length && (
               <ul className="flex flex-col gap-5">
                 {
-                          postData.comments.map((comment) => (
-                            // @ts-ignore todo fixed this type error
-                            <li key={comment.id}>{comment}</li>
-                          ))
-                        }
+                  post.comments.map((comment) => (
+                    <li key={comment.id}>{comment.content}</li>
+                  ))
+                }
               </ul>
               )}
             </div>
           </CardContent>
           )
       }
-    </div>
+    </Card>
 
   );
 }

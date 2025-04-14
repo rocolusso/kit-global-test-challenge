@@ -8,17 +8,17 @@ import { z } from 'zod';
 import { AlertCircle } from 'lucide-react';
 import { addDoc, collection } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
-import { db } from '../lib/firebase';
-import { Alert, AlertTitle } from './ui/alert';
-import { Textarea } from './ui/textarea';
-import { Input } from './ui/input';
+import db from '@/src/lib/firebase';
+import { Alert, AlertTitle } from '@/src/components/ui/alert';
+import Textarea from '@/src/components/ui/textarea';
+import Input from '@/src/components/ui/input';
 import {
   Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,
-} from './ui/form';
+} from '@/src/components/ui/form';
 import {
   Card, CardContent, CardDescription, CardHeader, CardTitle,
-} from './ui/card';
-import { Button } from './ui/button';
+} from '@/src/components/ui/card';
+import { Button } from '@/src/components/ui/button';
 
 export type Comment = {
     id: string;

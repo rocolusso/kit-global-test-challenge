@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/src/components/ui/button';
-import { Input } from '@/src/components/ui/input';
+import Input from '@/src/components/ui/input';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { Post } from '@/src/components/post-list';
+import { Post } from '@/src/lib/types';
 import { useRouter } from 'next/navigation';
 import PostEditForm from '@/src/components/post-edit-form';
-import { db } from '../lib/firebase';
+import RedirectButton from '@/src/components/redirect-button';
+import db from '@/src/lib/firebase';
 
 type Props = {
   postId: string;
@@ -73,6 +74,12 @@ function PostControls({ postId }: Props) {
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setIsCommenting(true)}>Make Comment</Button>
               <Button variant="outline" onClick={() => setIsEditing(true)}>Edit Post</Button>
+              <RedirectButton
+                className=""
+                targetUrl="/posts/"
+                variant="default"
+                btnText="Back to posts"
+              />
             </div>
             )
         }

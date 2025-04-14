@@ -16,8 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/src/components/ui/form';
-import { Input } from '@/src/components/ui/input';
-import { Textarea } from '@/src/components/ui/textarea';
+import Input from '@/src/components/ui/input';
+import Textarea from '@/src/components/ui/textarea';
 import { Button } from '@/src/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -25,7 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { z } from 'zod';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '@/src/lib/firebase';
+import db from '@/src/lib/firebase';
 
 export type Comment = {
     id: string
@@ -52,8 +52,6 @@ const postSchema = z.object({
 });
 
 type PostFormValues = z.infer<typeof postSchema>
-
-// TODO add remove Post
 
 function PostEditForm({ post, postId, setIsEditing }: {
     post: Post|null,
@@ -90,13 +88,13 @@ function PostEditForm({ post, postId, setIsEditing }: {
       setIsSaving(true);
       setIsError(false);
 
-      const handlePostUpdate = async (post: Post | null, postId: string) => {
+      const handlePostUpdate = async (postData: Post | null, postID: string) => {
         if (!post || !postId) return;
 
         try {
-          const postRef = doc(db, 'posts', postId);
+          const postRef = doc(db, 'posts', postID);
           await updateDoc(postRef, {
-            ...post,
+            ...postData,
             title: form.getValues('title'),
             content: form.getValues('content'),
             author: form.getValues('author'),
@@ -117,13 +115,13 @@ function PostEditForm({ post, postId, setIsEditing }: {
     }
   };
 
-  const deletePost = async (postId: string) => {
+  const deletePost = async (postIDid:string) => {
     if (!postId) return;
 
     try {
-      const postRef = doc(db, 'posts', postId);
+      const postRef = doc(db, 'posts', postIDid);
       await deleteDoc(postRef);
-      console.log(`Post with ID ${postId} successfully deleted.`);
+      console.log(`Post with ID ${postIDid} successfully deleted.`);
     } finally {
       router.push('/posts');
     }

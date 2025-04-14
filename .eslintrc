@@ -14,12 +14,7 @@
   "rules": {
       "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
       "import/extensions": "off",
-      "import/prefer-default-export": "off",
-      "no-param-reassign": "off",
       "react/jsx-props-no-spreading": "off",
-      "no-shadow": "off",
-      "react/require-default-props": "off",
-      "no-console": "off",
-    "react/no-unused-prop-types": "off"
+      "no-console": "off"
   }
 }
