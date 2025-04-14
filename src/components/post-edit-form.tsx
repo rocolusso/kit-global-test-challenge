@@ -22,10 +22,9 @@ import { Button } from '@/src/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { z } from 'zod';
-import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import db from '@/src/lib/firebase';
+import handlePostUpdate from '@/src/lib/post/updatePost';
+import deletePost from '@/src/lib/post/deletePost';
 
 export type Comment = {
     id: string
@@ -88,23 +87,7 @@ function PostEditForm({ post, postId, setIsEditing }: {
       setIsSaving(true);
       setIsError(false);
 
-      const handlePostUpdate = async (postData: Post | null, postID: string) => {
-        if (!post || !postId) return;
-
-        try {
-          const postRef = doc(db, 'posts', postID);
-          await updateDoc(postRef, {
-            ...postData,
-            title: form.getValues('title'),
-            content: form.getValues('content'),
-            author: form.getValues('author'),
-          });
-        } catch (error) {
-          console.error('Error updating post:', error);
-        }
-      };
-
-      await handlePostUpdate(post, postId);
+      await handlePostUpdate(post, postId, form);
     } catch (err: any) {
       setIsError(true);
       console.error('Error updating post:', err);
@@ -112,18 +95,6 @@ function PostEditForm({ post, postId, setIsEditing }: {
       setIsSaving(false);
       setIsEditing(false);
       router.refresh();
-    }
-  };
-
-  const deletePost = async (postIDid:string) => {
-    if (!postId) return;
-
-    try {
-      const postRef = doc(db, 'posts', postIDid);
-      await deleteDoc(postRef);
-      console.log(`Post with ID ${postIDid} successfully deleted.`);
-    } finally {
-      router.push('/posts');
     }
   };
 
@@ -199,7 +170,7 @@ function PostEditForm({ post, postId, setIsEditing }: {
               <Button
                 type="button"
                 className="bg-red-500"
-                onClick={() => deletePost(postId)}
+                onClick={() => deletePost(postId, router)}
               >
                 Delete Post
               </Button>

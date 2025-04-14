@@ -3,29 +3,16 @@
 import React, { useState } from 'react';
 import { Button } from '@/src/components/ui/button';
 import Input from '@/src/components/ui/input';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { Post } from '@/src/lib/types';
 import { useRouter } from 'next/navigation';
 import PostEditForm from '@/src/components/post-edit-form';
 import RedirectButton from '@/src/components/redirect-button';
 import db from '@/src/lib/firebase';
+import handlePostUpdate from '@/src/lib/post/updatePost';
 
 type Props = {
   postId: string;
-};
-
-const handlePostUpdate = async (post: Post | null, postId: string, comment:string) => {
-  if (!post || !postId) return;
-
-  try {
-    const postRef = doc(db, 'posts', postId);
-    await updateDoc(postRef, {
-      ...post,
-      comments: [...(post.comments ?? []), comment],
-    });
-  } catch (error) {
-    console.error('Error updating post:', error);
-  }
 };
 
 function PostControls({ postId }: Props) {
